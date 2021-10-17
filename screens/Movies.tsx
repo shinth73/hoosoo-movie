@@ -1,11 +1,15 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Dimensions, StyleSheet } from 'react-native';
-import Swiper from 'react-native-web-swiper';
+import {
+    ActivityIndicator,
+    Dimensions,
+    StyleSheet,
+    useColorScheme,
+} from 'react-native';
+import Swiper from 'react-native-swiper';
 import styled from 'styled-components/native';
 import { BlurView } from 'expo-blur';
 import { makeImgPath } from '../utils';
-import useColorScheme from 'expo-status-bar/build/useColorScheme';
 
 const API_KEY = '8f84640eaec345addf5f99ad785ed454';
 
@@ -28,7 +32,7 @@ const Title = styled.Text``;
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
-    const isDark = useColorScheme === 'dark';
+    const isDark = useColorScheme() === 'dark';
     const [loading, setLoading] = useState(true);
     const [nowPlaying, setNowPlaying] = useState([]);
     const getNowPlaying = async () => {
@@ -50,9 +54,14 @@ const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
     ) : (
         <Container>
             <Swiper
+                horizontal
                 loop
                 timeout={3.5}
                 controlsEnabled={false}
+                autoplay
+                autoplayTimeout={3.5}
+                showsButtons={false}
+                showsPagination={false}
                 containerStyle={{ width: '100%', height: SCREEN_HEIGHT / 4 }}
             >
                 {nowPlaying.map((movie) => (
