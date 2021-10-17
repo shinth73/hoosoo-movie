@@ -7,12 +7,16 @@
     "start": "react-native start"
   },
   "dependencies": {
+    "@react-native-community/blur": "^3.6.0",
     "@react-navigation/bottom-tabs": "^6.0.9",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
+    "@types/styled-components": "^5.1.15",
+    "@types/styled-components-react-native": "^5.1.1",
     "expo": "~42.0.1",
     "expo-app-loading": "1.1.2",
     "expo-asset": "~8.3.3",
+    "expo-blur": "~9.0.3",
     "expo-font": "~9.2.1",
     "expo-splash-screen": "~0.11.2",
     "expo-status-bar": "~1.0.4",
@@ -26,11 +30,17 @@
     "react-native-screens": "~3.4.0",
     "react-native-unimodules": "0.14.10",
     "react-native-web": "~0.13.12",
+    "react-native-web-swiper": "^2.2.1",
     "styled-components": "^5.3.1"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
-    "@expo/vector-icons": "^12.0.5"
+    "@expo/vector-icons": "^12.0.5",
+    "@types/jest": "^27.0.2",
+    "@types/react": "^17.0.30",
+    "@types/react-native": "^0.65.8",
+    "@types/react-test-renderer": "^17.0.1",
+    "typescript": "^4.4.4"
   },
   "private": true
 }
