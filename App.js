@@ -23,7 +23,6 @@ export default function App() {
     const [ready, setReady] = useState(false);
     const onFinish = () => setReady(true);
     const startLoading = async () => {
-        await Font.loadAsync(Ionicons.font);
         const fonts = loadFonts([Ionicons.font]);
         const images = loadImages([
             // require("./my-face.jpeg"),
