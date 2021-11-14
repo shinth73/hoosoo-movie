@@ -1,8 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
-import {StyleSheet, useColorScheme, View} from "react-native";
-import {makeImgPath} from "../utils";
-import {BlurView} from "expo-blur";
+import { BlurView } from "expo-blur";
+import React from "react";
+import { StyleSheet, useColorScheme, View } from "react-native";
+import styled from "styled-components/native";
+import { makeImgPath } from "../utils";
 import Poster from "./Poster";
 
 const BgImg = styled.Image``;
@@ -26,7 +26,7 @@ const Column = styled.View`
 const Overview = styled.Text<{ isDark: boolean }>`
   margin-top: 10px;
   color: ${(props) =>
-          props.isDark ? "rgba(255, 255, 255, 0.8)" : "rgba(0, 0, 0, 0.8)"};
+    props.isDark ? "rgba(255, 255, 255, 0.8)" : "rgba(0, 0, 0, 0.8)"};
 `;
 const Votes = styled(Overview)`
   font-size: 12px;
@@ -45,35 +45,33 @@ const Slide: React.FC<SlideProps> = ({
                                          posterPath,
                                          originalTitle,
                                          voteAverage,
-                                         overview
+                                         overview,
                                      }) => {
-    const isDark = useColorScheme() === 'dark';
+    const isDark = useColorScheme() === "dark";
     return (
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
             <BgImg
                 style={StyleSheet.absoluteFill}
-                source={{uri: makeImgPath(backdropPath)}}
+                source={{ uri: makeImgPath(backdropPath) }}
             />
             <BlurView
-                tint={isDark ? 'dark' : 'light'}
+                tint={isDark ? "dark" : "light"}
                 intensity={85}
                 style={StyleSheet.absoluteFill}
             >
                 <Wrapper>
-                    <Poster path={posterPath}/>
+                    <Poster path={posterPath} />
                     <Column>
                         <Title isDark={isDark}>{originalTitle}</Title>
                         {voteAverage > 0 ? (
                             <Votes isDark={isDark}>⭐️ {voteAverage}/10</Votes>
                         ) : null}
-                        <Overview isDark={isDark}>
-                            {overview.slice(0, 100)}...
-                        </Overview>
+                        <Overview isDark={isDark}>{overview.slice(0, 100)}...</Overview>
                     </Column>
                 </Wrapper>
             </BlurView>
         </View>
-    )
-}
+    );
+};
 
 export default Slide;
