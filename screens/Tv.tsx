@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ScrollView, FlatList, RefreshControl } from 'react-native';
 import { useQuery, useQueryClient } from 'react-query';
 import { tvApi } from '../api';
@@ -7,6 +7,7 @@ import HList from '../components/HList';
 
 const Tv = () => {
     const queryClient = useQueryClient();
+    const [refreshing,setRefreshing] = useState(false);
     const {
         isLoading: todayLoading,
         data: todayData,
@@ -22,11 +23,11 @@ const Tv = () => {
         data: trendingData,
         isRefetching: trendingRefetching,
     } = useQuery(['tv', 'trending'], tvApi.trending);
-    const onRefresh = () => {
-        queryClient.refetchQueries(['tv']);
+    const onRefresh = async() => {
+        setRefreshing(true);
+        await queryClient.refetchQueries(['tv']);
     };
     const loading = todayLoading || topLoading || trendingLoading;
-    const refreshing = todayRefetching || topRefetching || trendingRefetching;
     if (loading) {
         return <Loader />;
     }

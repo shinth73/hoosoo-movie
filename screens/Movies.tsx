@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import React from 'react';
+import React, { useState } from 'react';
 import { Dimensions, FlatList } from 'react-native';
 import Swiper from 'react-native-swiper';
 import styled from 'styled-components/native';
@@ -44,6 +44,11 @@ const HSeparator = styled.View`
 
 const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
     const queryClient = useQueryClient();
+    let refreshing: boolean,
+        setRefreshing: (
+            value: ((prevState: boolean) => boolean) | boolean,
+        ) => void;
+    [refreshing, setRefreshing] = useState(false);
     const {
         isLoading: nowPlayingLoading,
         data: nowPlayingData,
@@ -60,8 +65,9 @@ const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
         isRefetching: isRefetchingTrending,
     } = useQuery<MovieResponse>(['movies', 'trending'], moviesApi.trending);
 
-    const onRefresh = () => {
-        queryClient.refetchQueries(['movies']);
+    const onRefresh = async () => {
+        setRefreshing(true);
+        await queryClient.refetchQueries(['movies']);
     };
 
     const renderVMedia = ({ item }) => (
@@ -83,8 +89,6 @@ const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
 
     const movieKeyExtractor = (item) => item.id + '';
     const loading = nowPlayingLoading || upcomingLoading || trendingLoading;
-    const refreshing =
-        isRefetchingNowPlaying || isRefetchingUpcoming || isRefetchingTrending;
     return loading ? (
         <Loader />
     ) : upcomingData ? (

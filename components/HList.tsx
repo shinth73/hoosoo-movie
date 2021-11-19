@@ -44,4 +44,4 @@ const HList: React.FC<HListProps> = ({ title, data }) => (
         />
     </ListContainer>
 );
-export default Hlist;
+export default HList;
