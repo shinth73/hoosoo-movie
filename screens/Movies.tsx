@@ -7,7 +7,7 @@ import Slide from '../components/Slide';
 import VMedia from '../components/VMedia';
 import HMedia from '../components/HMedia';
 import { useQuery, useQueryClient } from 'react-query';
-import { MovieResponse, moviesApi } from '../api';
+import {MovieResponse, Movie, moviesApi} from '../api';
 import Loader from '../components/Loader';
 import HList from '../components/HList';
 
@@ -78,15 +78,6 @@ const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
         />
     );
 
-    const renderHMedia = ({ item }) => (
-        <HMedia
-            posterPath={item.poster_path}
-            originalTitle={item.original_title}
-            overview={item.overview}
-            releaseDate={item.release_date}
-        />
-    );
-
     const movieKeyExtractor = (item) => item.id + '';
     const loading = nowPlayingLoading || upcomingLoading || trendingLoading;
     return loading ? (
@@ -118,6 +109,7 @@ const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
                                 originalTitle={movie.original_title}
                                 voteAverage={movie.vote_average}
                                 overview={movie.overview}
+                                fullData={movie}
                             />
                         ))}
                     </Swiper>
@@ -133,7 +125,15 @@ const Movies: React.FC<NativeStackScreenProps<any, 'Movies'>> = () => {
             data={upcomingData.results}
             keyExtractor={movieKeyExtractor}
             ItemSeparatorComponent={HSeparator}
-            renderItem={renderHMedia}
+            renderItem={({ item }) => (
+                <HMedia
+                    posterPath={item.poster_path || ''}
+                    originalTitle={item.original_title}
+                    overview={item.overview}
+                    releaseDate={item.release_date}
+                    fullData={item}
+                />
+            )}
         />
     ) : null;
 };
